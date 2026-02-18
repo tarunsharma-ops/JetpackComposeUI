@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.learnjetpackcomposeui.UiDesigns.HomeScreen
+import com.example.learnjetpackcomposeui.UiDesigns.FoodMenuApp.HomeScreen
 import com.example.learnjetpackcomposeui.UiDesigns.SimpleLoginRegisterApp.LoginScreen
 import com.example.learnjetpackcomposeui.UiDesigns.SimpleLoginRegisterApp.RegisterScreen
 import com.example.learnjetpackcomposeui.UiDesigns.SimpleLoginRegisterApp.ResetPasswordScreen
