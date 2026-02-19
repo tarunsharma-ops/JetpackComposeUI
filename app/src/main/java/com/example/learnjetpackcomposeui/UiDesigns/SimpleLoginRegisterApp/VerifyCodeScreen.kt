@@ -36,7 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.xr.scenecore.Space
 import com.example.learnjetpackcomposeui.R
 import com.example.learnjetpackcomposeui.ui.theme.darkBlueColor
 import com.example.learnjetpackcomposeui.ui.theme.greyColor

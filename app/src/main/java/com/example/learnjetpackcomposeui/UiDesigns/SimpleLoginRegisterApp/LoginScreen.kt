@@ -204,31 +204,31 @@ fun LoginScreen(navController: NavHostController) {
                 Button(
                     onClick = {
 
-                        var isValid = true
-
-                        // Email Validation
-                        if (email.isBlank()) {
-                            emailError = "Email cannot be empty"
-                            isValid = false
-                        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                            emailError = "Enter valid email"
-                            isValid = false
-                        }
-
-                        // Password Validation
-                        if (password.isBlank()) {
-                            passwordError = "Password cannot be empty"
-                            isValid = false
-                        } else if (password.length < 6) {
-                            passwordError = "Password must be at least 6 characters"
-                            isValid = false
-                        }
-
-                        if (isValid) {
-                            navController.navigate("home"){
+//                        var isValid = true
+//
+//                        // Email Validation
+//                        if (email.isBlank()) {
+//                            emailError = "Email cannot be empty"
+//                            isValid = false
+//                        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//                            emailError = "Enter valid email"
+//                            isValid = false
+//                        }
+//
+//                        // Password Validation
+//                        if (password.isBlank()) {
+//                            passwordError = "Password cannot be empty"
+//                            isValid = false
+//                        } else if (password.length < 6) {
+//                            passwordError = "Password must be at least 6 characters"
+//                            isValid = false
+//                        }
+//
+//                        if (isValid) {
+                            navController.navigate("dashboard"){
                                 popUpTo("login") { inclusive = true }
                             }
-                        }
+//                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()

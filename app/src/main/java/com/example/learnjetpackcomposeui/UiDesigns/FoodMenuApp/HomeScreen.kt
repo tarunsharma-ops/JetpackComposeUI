@@ -1,5 +1,6 @@
 package com.example.learnjetpackcomposeui.UiDesigns.FoodMenuApp
 
+import android.net.Uri
 import android.widget.Scroller
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -53,31 +55,20 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.TextButton
+import androidx.navigation.NavController
+import com.example.learnjetpackcomposeui.UiDesigns.FoodMenuApp.FoodData.popularItemList
+import com.example.learnjetpackcomposeui.UiDesigns.FoodMenuApp.FoodData.suggestedItemList
+import com.example.learnjetpackcomposeui.UiDesigns.FoodMenuApp.model.SuggestedItemModel
 
 
 @Composable
-@Preview(showSystemUi = true)
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
 
     val categories = listOf(
         "All", "Pizza", "Burger", "Drinks", "Dessert", "Chinese"
     )
 
-    val popularItemList = listOf(
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger", R.drawable.baseline_star_24, "4.5"),
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger", R.drawable.baseline_star_24, "4.5"),
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger", R.drawable.baseline_star_24, "4.5"),
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger", R.drawable.baseline_star_24, "4.5"),
-
-        )
-
-    val suggestedItemList = listOf(
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger, French fries & Coldrink.", R.drawable.baseline_star_24, "4.5"),
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger, French fries & Coldrink.", R.drawable.baseline_star_24, "4.5"),
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger, French fries & Coldrink.", R.drawable.baseline_star_24, "4.5"),
-        PopularItemModel(R.drawable.photo1jpg, "Cheese Burger, French fries & Coldrink.", R.drawable.baseline_star_24, "4.5"),
-
-        )
 
     var selectedCategory by remember { mutableStateOf(0) }
 
@@ -94,7 +85,8 @@ fun HomeScreen() {
         Row(
             modifier = Modifier.padding(start = 15.dp, end = 15.dp),
             verticalAlignment = Alignment.CenterVertically
-        ) {
+        )
+        {
             Icon(
                 imageVector = Icons.Default.Menu,
                 contentDescription = "Menu",
@@ -139,7 +131,8 @@ fun HomeScreen() {
 
         Row(
             modifier = Modifier.padding(horizontal = 15.dp)
-        ) {
+        )
+        {
             // Custom Search
             Box(
                 modifier = Modifier
@@ -193,7 +186,8 @@ fun HomeScreen() {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.padding(horizontal = 15.dp)
-        ) {
+        )
+        {
             itemsIndexed(categories) { index, item ->
 
                 val isSelected = selectedCategory == index
@@ -225,94 +219,190 @@ fun HomeScreen() {
                 .padding(vertical = 5.dp)
                 .height(1.dp), color = greyColor
         )
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(
-            modifier = Modifier.padding(horizontal = 15.dp),
-            verticalAlignment = Alignment.CenterVertically
-        )
-        {
-            Text(
-                text = "Popular Items",
-                color = black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Text(text = "View All", color = greyColor, fontSize = 14.sp)
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-
-        LazyRow(
-            modifier = Modifier.padding(horizontal = 15.dp)
-        ) {
-            itemsIndexed(popularItemList) { index, item ->
-                PopularItemCard(item)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        Divider(
-            modifier = Modifier
-                .padding(vertical = 5.dp)
-                .height(1.dp), color = greyColor
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(
-            modifier = Modifier.padding(horizontal = 15.dp),
-            verticalAlignment = Alignment.CenterVertically
-        )
-        {
-            Text(
-                text = "Popular Items",
-                color = black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Text(text = "View All", color = greyColor, fontSize = 14.sp)
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-
-        LazyRow(
-            modifier = Modifier.padding(horizontal = 15.dp)
-        ) {
-            itemsIndexed(popularItemList) { index, item ->
-                PopularItemCard(item)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        Divider(
-            modifier = Modifier
-                .padding(vertical = 5.dp)
-                .height(1.dp), color = greyColor
-        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Text(
-            text = "Suggested Items"
-            ,color = black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 15.dp)
-        )
-        Spacer(modifier = Modifier.height(10.dp))
         LazyColumn(
-            modifier = Modifier.padding(horizontal = 15.dp)
-        ) {
+            modifier = Modifier
+                .weight(1f)
+        )
+        {
 
-            itemsIndexed(suggestedItemList) { index, item ->
-                SuggestedItemCard(item)
+            item {
+                Row(
+                    modifier = Modifier.padding(horizontal = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                )
+                {
+                    Text(
+                        text = "Popular Items",
+                        color = black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    TextButton(
+                        onClick = {
+                            val title = Uri.encode("Popular Items")
+                            navController.navigate("viewAllScreen/$title")
+                        }
+                    ) {
+                        Text(
+                            text = "View All",
+                            fontSize = 14.sp,
+                            color = greyColor
+                        )
+                    }
+
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LazyRow(
+                    modifier = Modifier.padding(horizontal = 15.dp)
+                ) {
+                    itemsIndexed(popularItemList) { index, item ->
+                        PopularItemCard(navController,item)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Divider(
+                    modifier = Modifier
+                        .padding(vertical = 5.dp)
+                        .height(1.dp), color = greyColor
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier.padding(horizontal = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                )
+                {
+                    Text(
+                        text = "Recommended Items",
+                        color = black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    TextButton(
+                        onClick = {
+                            val title = Uri.encode("Recommended Items")
+                            navController.navigate("viewAllScreen/$title")
+
+                        }
+                    ) {
+                        Text(
+                            text = "View All",
+                            fontSize = 14.sp,
+                            color = greyColor
+                        )
+                    }
+
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LazyRow(
+                    modifier = Modifier.padding(horizontal = 15.dp)
+                ) {
+                    itemsIndexed(popularItemList) { index, item ->
+                        PopularItemCard(navController, item)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Divider(
+                    modifier = Modifier
+                        .padding(vertical = 5.dp)
+                        .height(1.dp), color = greyColor
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = "Suggested Items", color = black,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 15.dp)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
             }
+
+            item {
+
+                Box(
+                    modifier = Modifier
+                        .height(250.dp)
+                        .padding(horizontal = 15.dp)
+                ) {
+
+                    LazyColumn {
+                        items(suggestedItemList) { item ->
+                            SuggestedItemCard(navController,item)
+                        }
+                    }
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Divider(
+                    modifier = Modifier
+                        .padding(vertical = 5.dp)
+                        .height(1.dp), color = greyColor
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.padding(horizontal = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                )
+                {
+                    Text(
+                        text = "Recently Viewed Items",
+                        color = black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    TextButton(
+                        onClick = {
+                            val title = Uri.encode("Recently Viewed Items")
+                            navController.navigate("viewAllScreen/$title")
+
+                        }
+                    ) {
+                        Text(
+                            text = "View All",
+                            fontSize = 14.sp,
+                            color = greyColor
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+                LazyRow(
+                    modifier = Modifier.padding(horizontal = 15.dp)
+                ) {
+                    itemsIndexed(popularItemList) { index, item ->
+                        PopularItemCard(navController, item)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(15.dp))
+            }
+
         }
+
 
     }
 
@@ -321,12 +411,16 @@ fun HomeScreen() {
 
 
 @Composable
-fun PopularItemCard(item: PopularItemModel) {
+fun PopularItemCard(navController: NavController, item: PopularItemModel) {
 
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = white)
+        colors = CardDefaults.cardColors(containerColor = white),
+        modifier = Modifier.clickable  {
+            val route = "foodDetailScreen/${item.id}"
+            navController.navigate(route)
+        }
     ) {
         Column(
         ) {
@@ -348,8 +442,10 @@ fun PopularItemCard(item: PopularItemModel) {
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
 
-            Row(verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 6.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 6.dp)
+            ) {
 
                 Icon(
                     painter = painterResource(item.ratingImg),
@@ -373,13 +469,20 @@ fun PopularItemCard(item: PopularItemModel) {
 }
 
 @Composable
-fun SuggestedItemCard(item: PopularItemModel) {
+fun SuggestedItemCard(navController: NavController, item: SuggestedItemModel) {
 
     Card(
         shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.fillMaxWidth().height(200.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .padding(horizontal = 15.dp)
+            .clickable  {
+                val route = "foodDetailScreen/${item.id}"
+                navController.navigate(route)
+            },
         elevation = CardDefaults.cardElevation(6.dp),
-        colors = CardDefaults.cardColors(containerColor = white)
+        colors = CardDefaults.cardColors(containerColor = white),
     ) {
         Column(
         ) {
@@ -393,7 +496,7 @@ fun SuggestedItemCard(item: PopularItemModel) {
                     .height(150.dp)
                     .clip(RoundedCornerShape(12.dp)),
 
-            )
+                )
 
             Spacer(modifier = Modifier.height(6.dp))
 
@@ -403,8 +506,10 @@ fun SuggestedItemCard(item: PopularItemModel) {
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
 
-            Row(verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 6.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 6.dp)
+            ) {
 
                 Icon(
                     painter = painterResource(item.ratingImg),

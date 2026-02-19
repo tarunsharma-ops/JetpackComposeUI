@@ -68,7 +68,9 @@ fun StartScreen(navController: NavHostController) {
         Column(modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 30.dp)) {
             Button(
                 onClick = {
-                    navController.navigate("login")
+                    navController.navigate("login"){
+                        popUpTo("start") { inclusive = true }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -94,7 +96,9 @@ fun StartScreen(navController: NavHostController) {
                 fontSize = 12.sp,
                 modifier = Modifier.fillMaxWidth()
                     .clickable {
-                        navController.navigate("Signup")
+                        navController.navigate("Signup"){
+                            popUpTo("start") { inclusive = true }
+                        }
                     }, textAlign = TextAlign.Center
             )
         }
